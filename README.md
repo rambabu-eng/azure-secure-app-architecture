@@ -109,8 +109,9 @@ Secure collaboration model
 ├── backend.tf
 ├── docs/
 │   ├── architecture_diagram/
-│   └── screenshots/
-└── Screenshots/ (tracked via Git LFS)
+    └── screenshots/
+
+
 🚀 Deployment Instructions
 1️⃣ Initialize Terraform
 terraform init
