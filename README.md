@@ -140,6 +140,7 @@ Secret management	Azure Key Vault
 Infrastructure integrity	Remote backend with locking
 Governance	RBAC enforcement
 Repo hygiene	Git LFS + .gitignore hardening
+
 🎯 Key Learning Outcomes
 
 This project demonstrates hands-on expertise in:
@@ -155,6 +156,11 @@ Handling Git large file and SSH authentication challenges
 Troubleshooting Azure subscription and RBAC issues
 
 Applying enterprise-ready DevOps practices
+
+🧹 Environment Teardown
+
+To remove all deployed Azure resources and prevent unnecessary costs:
+terraform destroy
 
 📌 Future Enhancements
 
