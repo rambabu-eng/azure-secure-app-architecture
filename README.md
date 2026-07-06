@@ -1,73 +1,70 @@
-Azure Secure App Architecture with Terraform
-1. Project Overview
-This project implements a secure-by-design Azure application architecture using Terraform Infrastructure as Code (IaC).
-The design focuses on network isolation, identity-based access, secretless authentication, and governed Terraform state management, following enterprise cloud architecture standards.
+# Azure Secure App Architecture with Terraform
 
-2. Business Problem & Solution
-Business Problem
+## 1. Project Overview
+
+This project implements a **secure-by-design Azure application architecture** using Terraform Infrastructure as Code (IaC).  
+The design focuses on **network isolation, identity-based access, secretless authentication, and governed Terraform state management**, following enterprise cloud architecture standards.
+
+---
+
+## 2. Business Problem & Solution
+
+### Business Problem
+
 Applications often rely on public endpoints, stored credentials, and manual configuration. This increases the attack surface, reduces consistency, and complicates compliance in regulated environments.
 
-Solution
-This architecture delivers a fully private, secure Azure PaaS environment where:
+### Solution
 
-Application identity replaces credentials
+This architecture delivers a **fully private, secure Azure PaaS environment** where:
 
-Databases and Key Vault are accessible only through Private Endpoints
+- Application identity replaces credentials  
+- Databases and Key Vault are accessible only through **Private Endpoints**  
+- Terraform provides **repeatable, governed deployments** with remote state and RBAC  
+- Network isolation ensures no public exposure of sensitive services  
 
-Terraform provides repeatable, governed deployments with remote state and RBAC
+This pattern serves as a **reusable enterprise blueprint** for secure Azure application deployments.
 
-Network isolation ensures no public exposure of sensitive services
+---
 
-This pattern serves as a reusable enterprise blueprint for secure Azure application deployments.
+## 3. Architecture Summary
 
-3. Architecture Summary
 This solution deploys:
 
-Azure Virtual Network (VNet) with segmented subnets
+- **Azure Virtual Network (VNet)** with segmented subnets  
+- **Azure App Service** with System-Assigned Managed Identity  
+- **Azure SQL Database** with public network access disabled  
+- **Azure Key Vault** for secret management  
+- **Private Endpoints** for SQL and Key Vault  
+- **Private DNS Zones** for internal name resolution  
+- **RBAC** for access governance  
+- **Remote Terraform backend** in Azure Storage  
+- **Git LFS** for large file handling  
+- **SSH-based Git authentication** for secure repository operations  
 
-Azure App Service with System-Assigned Managed Identity
+---
 
-Azure SQL Database with public network access disabled
+## 4. Architecture Diagram
 
-Azure Key Vault for secret management
-
-Private Endpoints for SQL and Key Vault
-
-Private DNS Zones for internal name resolution
-
-RBAC for access governance
-
-Remote Terraform backend in Azure Storage
-
-Git LFS for large file handling
-
-SSH-based Git authentication for secure repository operations
-
-4. Architecture Diagram
-Code
+```text
 ![Architecture Diagram](docs/architecture_diagram/azure-secure-app-architecture.png)
-This placement follows industry best practice:
-Diagram immediately after the architecture summary, before deep technical sections.
+This diagram appears immediately after the architecture summary, following industry best practice.
 
-5. Key Screenshots 
+5. Key Screenshots (High-Impact Only)
 These screenshots demonstrate critical security and architecture validations.
 
 5.1 SQL Database — Public Access Disabled
-Code
+text
 ![SQL Public Access Disabled](docs/screenshots/sql-public-access-disabled.png)
 5.2 Private Endpoint for SQL
-Code
+text
 ![SQL Private Endpoint](docs/screenshots/sql-private-endpoint.png)
 5.3 Key Vault Access via Managed Identity
-Code
+text
 ![Key Vault RBAC](docs/screenshots/keyvault-managed-identity-access.png)
 5.4 App Service VNet Integration
-Code
+text
 ![App Service VNet Integration](docs/screenshots/appservice-vnet-integration.png)
-Remaining screenshots (logs, portal views, troubleshooting, etc.) are stored in:
-docs/screenshots/
-
-This keeps the README clean while still showing proof of secure architecture.
+Remaining screenshots (logs, portal views, troubleshooting, etc.) are stored in docs/screenshots/.
 
 6. Security & Governance Design
 6.1 Network Security
@@ -138,7 +135,7 @@ CI/CD readiness
 Safe collaboration
 
 8. Repository Structure
-Code
+text
 .
 ├── appservice.tf
 ├── dns.tf
@@ -155,7 +152,6 @@ Code
 ├── backend.tf
 ├── docs/
 │   ├── architecture_diagram/
-<<<<<<< HEAD
 │   └── screenshots/
 └── README.md
 This structure is reusable across all future projects.
@@ -171,22 +167,15 @@ Remote backend created or bootstrapped
 9.2 Steps
 Initialize Terraform
 
-Code
-=======
-    └── screenshots/
-
-
-🚀 Deployment Instructions
-1️⃣ Initialize Terraform
->>>>>>> 7c59a198eca9c74674bc061719ecfdbbc9f7ce96
+bash
 terraform init
 Review the plan
 
-Code
+bash
 terraform plan
 Apply the infrastructure
 
-Code
+bash
 terraform apply
 Validate deployment
 
@@ -199,8 +188,6 @@ Key Vault access
 SQL public access disabled
 
 10. Operations & Monitoring
-(Extend this section as monitoring is added.)
-
 Azure Monitor + Log Analytics (planned)
 
 App Service logs and metrics
@@ -244,7 +231,7 @@ Enterprise DevOps & IaC practices
 13. Environment Teardown
 To remove all deployed resources:
 
-Code
+bash
 terraform destroy
 14. Future Enhancements
 GitHub Actions CI/CD with OIDC
