@@ -1,98 +1,144 @@
-🔐 Azure Secure App Architecture with Terraform
+Azure Secure App Architecture with Terraform
+1. Project Overview
+This project implements a secure-by-design Azure application architecture using Terraform Infrastructure as Code (IaC).
+The design focuses on network isolation, identity-based access, secretless authentication, and governed Terraform state management, following enterprise cloud architecture standards.
 
-📌 Project Overview
+2. Business Problem & Solution
+Business Problem
+Applications often rely on public endpoints, stored credentials, and manual configuration. This increases the attack surface, reduces consistency, and complicates compliance in regulated environments.
 
-This project demonstrates a secure, enterprise-style Azure application architecture deployed using Terraform Infrastructure as Code (IaC).
+Solution
+This architecture delivers a fully private, secure Azure PaaS environment where:
 
-The focus of this implementation is not just resource provisioning, but enforcing security, network isolation, identity-based access, and production-ready state management aligned with real-world cloud governance practices.
+Application identity replaces credentials
 
-🏗 Architecture Summary
+Databases and Key Vault are accessible only through Private Endpoints
 
+Terraform provides repeatable, governed deployments with remote state and RBAC
+
+Network isolation ensures no public exposure of sensitive services
+
+This pattern serves as a reusable enterprise blueprint for secure Azure application deployments.
+
+3. Architecture Summary
 This solution deploys:
 
 Azure Virtual Network (VNet) with segmented subnets
 
-Azure App Service (Web App)
+Azure App Service with System-Assigned Managed Identity
 
-Azure SQL Database (Public access disabled)
+Azure SQL Database with public network access disabled
 
-Azure Key Vault
+Azure Key Vault for secret management
 
-Private Endpoints for:
-
-Azure SQL
-
-Azure Key Vault
+Private Endpoints for SQL and Key Vault
 
 Private DNS Zones for internal name resolution
 
-System-Assigned Managed Identity for App Service
+RBAC for access governance
 
-Role-Based Access Control (RBAC)
+Remote Terraform backend in Azure Storage
 
-Remote Terraform Backend in Azure Storage
+Git LFS for large file handling
 
-Git LFS for repository hygiene
+SSH-based Git authentication for secure repository operations
 
-SSH-based Git authentication
+4. Architecture Diagram
+Code
+![Architecture Diagram](docs/architecture_diagram/azure-secure-app-architecture.png)
+This placement follows industry best practice:
+Diagram immediately after the architecture summary, before deep technical sections.
 
-🔐 Security Design Principles
+5. Key Screenshots 
+These screenshots demonstrate critical security and architecture validations.
 
-This architecture was built following enterprise security best practices:
+5.1 SQL Database — Public Access Disabled
+Code
+![SQL Public Access Disabled](docs/screenshots/sql-public-access-disabled.png)
+5.2 Private Endpoint for SQL
+Code
+![SQL Private Endpoint](docs/screenshots/sql-private-endpoint.png)
+5.3 Key Vault Access via Managed Identity
+Code
+![Key Vault RBAC](docs/screenshots/keyvault-managed-identity-access.png)
+5.4 App Service VNet Integration
+Code
+![App Service VNet Integration](docs/screenshots/appservice-vnet-integration.png)
+Remaining screenshots (logs, portal views, troubleshooting, etc.) are stored in:
+docs/screenshots/
 
-✅ Zero Public Database Exposure
+This keeps the README clean while still showing proof of secure architecture.
 
-SQL Server public network access disabled
+6. Security & Governance Design
+6.1 Network Security
+SQL Database public access disabled
 
-Access only via Private Endpoint
+Access restricted exclusively via Private Endpoints
 
-✅ Secretless Authentication
+App Service integrated with VNet
 
+Private DNS Zones for internal resolution
+
+6.2 Identity & Access
 App Service uses Managed Identity
 
 Key Vault access granted via RBAC
 
-No credentials stored in code
+No secrets stored in code or configuration
 
-✅ Network Isolation
+6.3 Secret Management
+All sensitive values stored in Key Vault
 
-Private Endpoints for SQL & Key Vault
+RBAC governs secret retrieval
 
-Private DNS Zones for internal resolution
+No connection strings or passwords committed to Git
 
-Controlled VNet integration
+6.4 Terraform State Governance
+Remote backend in Azure Storage
 
-✅ Infrastructure State Security
+State locking enabled
 
-Remote Terraform backend
+.tfstate and .tfvars excluded via .gitignore
 
-Azure Storage-based state locking
+RBAC controls who can apply infrastructure
 
-No local state files committed
+7. Terraform Implementation
+7.1 IaC Structure
+Terraform configuration is organized by concern:
 
-.tfstate and .tfvars excluded from Git
+networking.tf – VNet, subnets
 
-📦 Terraform Backend Configuration
+appservice.tf – App Service + Managed Identity
 
-Remote state is stored in Azure Storage:
+sql.tf – SQL Server + Database
 
-Storage Account: sttfstate261551780
+keyvault.tf – Key Vault + RBAC
 
-Container: tfstate
+private-endpoints.tf – Private Endpoints
 
-State File Key: azure-secure-app-architecture-dev.tfstate
+dns.tf – Private DNS Zones
 
-Benefits:
+rbac.tf – Role assignments
+
+backend.tf – Remote backend configuration
+
+variables.tf / versions.tf – Inputs + provider versions
+
+outputs.tf – Key outputs
+
+7.2 Remote Backend
+Remote state provides:
 
 Centralized state management
 
-State locking (prevents corruption)
+State locking
 
 CI/CD readiness
 
-Secure collaboration model
+Safe collaboration
 
-🗂 Repository Structure
+8. Repository Structure
+Code
 .
 ├── appservice.tf
 ├── dns.tf
@@ -110,70 +156,100 @@ Secure collaboration model
 ├── docs/
 │   ├── architecture_diagram/
 │   └── screenshots/
-└── Screenshots/ (tracked via Git LFS)
-🚀 Deployment Instructions
-1️⃣ Initialize Terraform
+└── README.md
+This structure is reusable across all future projects.
+
+9. Deployment Workflow
+9.1 Prerequisites
+Terraform installed
+
+Azure CLI authenticated
+
+Remote backend created or bootstrapped
+
+9.2 Steps
+Initialize Terraform
+
+Code
 terraform init
-2️⃣ Review Plan
+Review the plan
+
+Code
 terraform plan
-3️⃣ Apply Infrastructure
+Apply the infrastructure
+
+Code
 terraform apply
-🛠 Git & Repository Engineering
+Validate deployment
 
-To maintain repository integrity:
+App Service identity
 
-Git LFS is used for PNG screenshots
+Private Endpoint connectivity
 
-SSH authentication configured for secure push operations
+Key Vault access
 
-Large file handling issues resolved
+SQL public access disabled
 
-Clean commit history maintained
+10. Operations & Monitoring
+(Extend this section as monitoring is added.)
+
+Azure Monitor + Log Analytics (planned)
+
+App Service logs and metrics
+
+Private Endpoint connectivity checks
+
+RBAC review for least privilege
+
+Terraform plan before apply
+
+11. Git & Repository Engineering
+Git LFS for large assets
+
+SSH authentication for secure Git operations
+
+Hardened .gitignore excluding:
+
+.tfstate
+
+.tfvars
+
+Tooling artifacts
 
 No sensitive files committed
 
-📊 Enterprise-Level Considerations Implemented
-Concern	Implementation
-Network security	Private Endpoints + DNS
-Identity security	Managed Identity
-Secret management	Azure Key Vault
-Infrastructure integrity	Remote backend with locking
-Governance	RBAC enforcement
-Repo hygiene	Git LFS + .gitignore hardening
+12. Key Learning Outcomes
+This project demonstrates:
 
-🎯 Key Learning Outcomes
+Secure Azure PaaS architecture design
 
-This project demonstrates hands-on expertise in:
+Private Endpoint networking
 
-Designing secure Azure PaaS architectures
+Terraform remote backend configuration
 
-Implementing Private Endpoint networking patterns
+Git LFS + SSH authentication
 
-Configuring Terraform remote state
+RBAC troubleshooting
 
-Handling Git large file and SSH authentication challenges
+Enterprise DevOps & IaC practices
 
-Troubleshooting Azure subscription and RBAC issues
+13. Environment Teardown
+To remove all deployed resources:
 
-Applying enterprise-ready DevOps practices
-
-🧹 Environment Teardown
-
-To remove all deployed Azure resources and prevent unnecessary costs:
+Code
 terraform destroy
+14. Future Enhancements
+GitHub Actions CI/CD with OIDC
 
-📌 Future Enhancements
+Dev/test/prod environment separation
 
-CI/CD integration using GitHub Actions with OIDC
+Private Endpoint for Terraform state
 
-Environment separation (dev/prod state keys)
+Storage versioning + soft delete
 
-Private Endpoint for Terraform state storage
+Full Azure Monitor + Log Analytics integration
 
-Storage versioning and soft delete configuration
-
-👨‍💻 Author
-
-Rambabu Katta
+15. Author
+Rambabu Katta  
 Azure Cloud Engineer | Terraform | Azure Networking | DevOps
 Melbourne, Australia
