@@ -155,6 +155,7 @@ Code
 ├── backend.tf
 ├── docs/
 │   ├── architecture_diagram/
+<<<<<<< HEAD
 │   └── screenshots/
 └── README.md
 This structure is reusable across all future projects.
@@ -171,6 +172,13 @@ Remote backend created or bootstrapped
 Initialize Terraform
 
 Code
+=======
+    └── screenshots/
+
+
+🚀 Deployment Instructions
+1️⃣ Initialize Terraform
+>>>>>>> 7c59a198eca9c74674bc061719ecfdbbc9f7ce96
 terraform init
 Review the plan
 
