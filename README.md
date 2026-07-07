@@ -49,7 +49,7 @@ This solution deploys:
 ![Architecture Diagram](docs/architecture_diagram/azure-secure-app-architecture.png)
 This diagram appears immediately after the architecture summary, following industry best practice.
 
-5. Key Screenshots (High-Impact Only)
+5. Key Screenshots 
 These screenshots demonstrate critical security and architecture validations.
 
 5.1 SQL Database — Public Access Disabled
@@ -58,9 +58,9 @@ text
 5.2 Private Endpoint for SQL
 text
 ![SQL Private Endpoint](docs/screenshots/sql-private-endpoint.png)
-5.3 Key Vault Access via Managed Identity
+5.3 Key Vault Public Access Disabled
 text
-![Key Vault RBAC](docs/screenshots/keyvault-managed-identity-access.png)
+![Key Vault Public Access Disables](docs/screenshots/keyvault-public-access-disabled.png)
 5.4 App Service VNet Integration
 text
 ![App Service VNet Integration](docs/screenshots/appservice-vnet-integration.png)
