@@ -37,7 +37,7 @@ The design focuses on:
 
 ## Business Problem
 
-Applications that rely on public endpoints, stored credentials, and manual configuration increase security risk and reduce deployment consistency. In regulated and enterprise environments, infrastructure must be repeatable, governed, auditable, and secure by design.
+Applications that rely on public endpoints, stored credentials, and manual configuration increase the attack surface and reduce deployment consistency. In enterprise or regulated environments, infrastructure must be repeatable, governed, auditable, and secure by design.
 
 ## Solution
 
@@ -69,6 +69,8 @@ This architecture deploys:
 
 ## Key Screenshots
 
+The screenshots below show the main security and architecture validations for this project.
+
 ### SQL Database — Public Access Disabled
 
 ![SQL Public Access Disabled](docs/screenshots/sql-public-access-disabled.png)
@@ -93,21 +95,7 @@ This architecture deploys:
 
 ![SQL Private DNS A Records](docs/screenshots/Privatednszone_Sqldb_A_Records.png)
 
-### Private DNS Zone — Key Vault A Records
-
-![Key Vault Private DNS A Records](docs/screenshots/Privatednszone_Key_vault_A_Records.png)
-
-### Key Vault Private Endpoint Approved
-
-![Key Vault Private Endpoint Approved](docs/screenshots/Private_endpoint_link_Keyvault_approved.png)
-
-### Key Vault Secret Validation
-
-![Key Vault Secret](docs/screenshots/Key_Vaultsecret.png)
-
-### DNS Resolution Validation
-
-![Key Vault SQL DNS Resolution](docs/screenshots/Keyvault_sqldb_DNS_Resolution.png)
+Additional validation screenshots are available in the `docs/screenshots/` folder.
 
 ## Security & Governance Design
 
@@ -179,15 +167,8 @@ This architecture deploys:
     ├── architecture_diagram/
     │   └── azure-secure-app-architecture.png
     └── screenshots/
-        ├── Key_Vaultsecret.png
-        ├── Keyvault_sqldb_DNS_Resolution.png
-        ├── Private_endpoint_link_Keyvault_approved.png
-        ├── Privatednszone_Key_vault_A_Records.png
-        ├── Privatednszone_Sqldb_A_Records.png
-        ├── Resources1.png
-        ├── Resources2.png
-        ├── Screenshot_Webapp_Vnet_Subnet.png
         ├── Webapp_Identity_Systemassigned.png
+        ├── Privatednszone_Sqldb_A_Records.png
         ├── appservice-vnet-integration.png
         ├── keyvault-public-access-disabled.png
         ├── sql-private-endpoint.png
